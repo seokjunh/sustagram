@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
+
   const [picture, setPicture] = useState([
     "https://cdn.pixabay.com/photo/2013/08/26/09/40/silhouette-175970_1280.jpg",
     "https://cdn.pixabay.com/photo/2015/11/25/09/42/rocks-1061540_1280.jpg",
@@ -37,13 +39,30 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    if (darkMode) {
+      document.body.className = "dark";
+    } else {
+      document.body.className = "";
+    }
+  });
+
   return (
     <div className="w-full max-w-4xl mx-auto py-6 px-4">
-      <header className="flex items-center mb-6">
+      {/* {darkMode.toString()} */}
+      <header className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">SUSTAGRAM</h1>
-        <button onClick={onRecoverHandler}>
-          <img src="/redo_icon-icons.webp" className="h-10 ml-4" />
-        </button>
+        <div className="flex items-center gap-4">
+          <button onClick={() => setDarkMode((darkMode) => !darkMode)}>
+            <img
+              src={darkMode ? "/moon.svg" : "/sun.svg"}
+              className="h-10 ml-4"
+            />
+          </button>
+          <button onClick={onRecoverHandler}>
+            <img src="/redo_icon-icons.webp" className="h-10 ml-4" />
+          </button>
+        </div>
       </header>
       <div className="grid grid-cols-3 gap-4">
         {picture.map((value, index) => (
